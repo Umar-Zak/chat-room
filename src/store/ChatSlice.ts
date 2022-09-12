@@ -31,6 +31,11 @@ const getChats = () => {
     return chats
 }
 
+export const channelName = "messaging"
+export const channel = new BroadcastChannel(channelName)
+
+
+
 const slice = createSlice({
     name: "chats",
     initialState: {
@@ -41,12 +46,17 @@ const slice = createSlice({
         addMessage: (state: ChatSlice, action:ChatPayload):void => {
             state.chats.push(action.payload)
             setChats(state.chats)
+            channel.postMessage(action.payload)
         },
 
         loadChats: (state: ChatSlice) => {
             state.chats = getChats()
-        }
+        },
+        receiveMessage: (state: ChatSlice, action:ChatPayload):void => {
+            state.chats.push(action.payload)
+            setChats(state.chats)
+        },
     }
 })
 export default slice.reducer
-export const {addMessage, loadChats} = slice.actions
+export const {addMessage, loadChats, receiveMessage} = slice.actions

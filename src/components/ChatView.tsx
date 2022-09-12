@@ -1,7 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from "styled-components"
 import {useDispatch, useSelector} from "react-redux"
-import {addMessage, ChatBubble} from "../store/ChatSlice"
+import {addMessage, ChatBubble, channel, receiveMessage} from "../store/ChatSlice"
+
+
  interface ChatViewInterface {
     user: {
         username: string
@@ -10,9 +12,16 @@ import {addMessage, ChatBubble} from "../store/ChatSlice"
  }
 
 export const ChatView = ({user}: ChatViewInterface) => {
-    const chats = useSelector<any, ChatBubble[]>((state: any) => state.chats.chats)
+    let chats = useSelector<any, ChatBubble[]>((state: any) => state.chats.chats)
     const dispatch = useDispatch()
     const [message, setMessage] = useState("")
+
+    useEffect(() => {}, [chats])
+
+    channel.onmessage = (message: MessageEvent<ChatBubble>) => {
+        const data = message.data
+        dispatch(receiveMessage(data))
+    }
 
     const handleSendMessage = () => {
         if(!message) return
