@@ -41,8 +41,21 @@ export const ChatView = ({user}: ChatViewInterface) => {
        {
         chats.map((chat, index) => (
             <>
-           {chat.user.id !== user.id && <p key={index} className="from-them">{chat.message}</p>}
-        {chat.user.id === user.id && <p  key={index} className="from-me">{chat.message}</p>}
+           {chat.user.id !== user.id && 
+           <>
+           <Them>{chat.user.username}</Them>
+           <p key={index} className="from-them">{chat.message}</p>
+           </>
+           }
+        {
+        chat.user.id === user.id && 
+        <>
+        <UserContainer>
+        <p>Me</p>
+        </UserContainer>
+        <p  key={index} className="from-me">{chat.message}</p>
+        </>
+        }
             </>
         ))
        }
@@ -125,5 +138,15 @@ background:#fd4957
   border: none;
   font-size: 1.7rem
  `
+ const Them = styled.p`
+ margin-bottom: -3px
+ `
+ const UserContainer = styled.div`
+ display: flex;
+ width: 100%;
+ justify-content: flex-end;
+ margin-bottom: -17px
+ `
 
+ 
  
