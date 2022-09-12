@@ -1,30 +1,52 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from "styled-components"
+import {useDispatch, useSelector} from "react-redux"
+import {addMessage, ChatBubble} from "../store/ChatSlice"
+ interface ChatViewInterface {
+    user: {
+        username: string
+        id: string
+    }
+ }
 
+export const ChatView = ({user}: ChatViewInterface) => {
+    const chats = useSelector<any, ChatBubble[]>((state: any) => state.chats.chats)
+    const dispatch = useDispatch()
+    const [message, setMessage] = useState("")
 
- 
+    const handleSendMessage = () => {
+        if(!message) return
 
-export const ChatView = () => {
+       dispatch(addMessage({user, message}))
+       setMessage("")
+        
+    }
+
   return (
    <Container>
     <Header>
-<HeaderText>Chat room</HeaderText>
+   <HeaderText>Chat room</HeaderText>
     </Header>
     <ChatArea>
         <div className="imessage">
-        <p className="from-them">It was loud. We just laid there and said &ldquo;is this an earthquake? 
-        rdI think this is an earthquake.
-        I think this is an earthquake.I think this is an earthquake.
-        I think this is an earthquake.
-        I think this is an earthquake.
-        </p>
-    <p className="from-me">Like is this an earthquake just go back to sleep</p>
+       {
+        chats.map((chat, index) => (
+            <>
+           {chat.user.id !== user.id && <p key={index} className="from-them">{chat.message}</p>}
+        {chat.user.id === user.id && <p  key={index} className="from-me">{chat.message}</p>}
+            </>
+        ))
+       }
         </div>
 
     </ChatArea>
     <BottomArea>
-    <TextInput type="text" placeholder='Type message' />
-    <SendButton>Send</SendButton>
+    <TextInput 
+    value={message} 
+    onChange={(event) => setMessage(event.target.value)} 
+    type="text" placeholder='Type message'
+     />
+    <SendButton onClick={handleSendMessage}>Send</SendButton>
     </BottomArea>
    </Container>
    )

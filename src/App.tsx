@@ -1,12 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
+import {Provider} from "react-redux"
 import './App.css';
-import { Modal } from './components/Modal';
 import { HomePage } from './Pages/HomePage';
+import store from './store/store';
+
 
 function App() {
   return (
-   <HomePage/>
+ <Provider store={store}>
+    <HomePage/>
+ </Provider>
   );
 }
 
