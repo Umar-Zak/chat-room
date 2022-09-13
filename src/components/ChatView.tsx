@@ -28,7 +28,6 @@ export const ChatView = ({user}: ChatViewInterface) => {
 
        dispatch(addMessage({user, message}))
        setMessage("")
-        
     }
 
   return (
@@ -56,7 +55,7 @@ export const ChatView = ({user}: ChatViewInterface) => {
         <p  key={index} className="from-me">{chat.message}</p>
         </>
         }
-            </>
+        </>
         ))
        }
         </div>
@@ -86,11 +85,15 @@ background:#fd4957
 `
 
  const Container = styled.div`
- width: 600px;
- height: 800px;
- border-radius: 10px;
- box-shadow: 0 5px 9px rgba(0, 0, 0, 0.30);
- margin-top: 50px
+width: 100%;
+ @media screen and (min-width: 768px){
+    width: 600px;
+    height: 800px;
+    border-radius: 10px;
+    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.30);
+    margin-top: 50px
+ }
+ 
  `
 
  const ChatArea = styled.div`
@@ -116,8 +119,8 @@ background:#fd4957
  `
 
  const SendButton  = styled.button`
-  width: 150px;
-  padding-block: 10px;
+  width: 120px;
+  padding-block: 8px;
   text-align: center;
   color: #fd4957;
   background: white;
@@ -126,17 +129,27 @@ background:#fd4957
   font-size: 1.8rem;
   font-weight: 500;
   cursor: pointer;
+
+  @media screen and (min-width: 768px){
+    width: 150px;
+    padding-block: 10px;
+  }
  `
 
  const TextInput = styled.input`
-  width: 330px;
-  padding-block: 15px;
+  width: 150px;
+  padding-block: 10px;
   padding-inline: 20px;
   border-radius: 30px;
   background: white;
   outline: none;
   border: none;
-  font-size: 1.7rem
+  font-size: 1.7rem;
+
+  @media screen and (min-width: 768px){
+  width: 300px;
+  padding-block: 15px;
+  }
  `
  const Them = styled.p`
  margin-bottom: -3px

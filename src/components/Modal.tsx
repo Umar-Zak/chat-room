@@ -11,10 +11,9 @@ const validateUsername = Yup.object().shape({
 interface ModalInterface {
     handleSubmit: (formValues: {username: string}) => void
 }
+
+
 export const Modal = ({handleSubmit}: ModalInterface) => {
-
-    
-
   return (
     <Container>
         <Formik 
@@ -28,14 +27,25 @@ export const Modal = ({handleSubmit}: ModalInterface) => {
                 ({handleChange, touched, errors, handleSubmit}) => (
                     <>
                     <InputsContainter>
-                    <TextInput onChange={handleChange} name="username" placeholder='Enter your name' type="text" />
-                    <SubmitButton onClick={() => handleSubmit()} >Join Chat</SubmitButton>
+                    <TextInput 
+                    onChange={handleChange} 
+                    name="username" 
+                    placeholder='Enter your name' 
+                    type="text" />
+                    <SubmitButton 
+                    onClick={() => handleSubmit()}
+                     >
+                        Join Chat
+                        </SubmitButton>
                     </InputsContainter>
-                      {errors.username && touched.username && <ErrorMessage>{errors.username}</ErrorMessage>}
+                      {errors.username && 
+                      touched.username && 
+                      <ErrorMessage>
+                        {errors.username}
+                      </ErrorMessage>}
                     </>
                 )
             }
-            
         </Formik>
       
     </Container>
